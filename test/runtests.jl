@@ -1,7 +1,11 @@
 using AlgebraOfNNs
 using Test
 using Random
+using Logging
+
 rng = Random.Xoshiro(1234)
+test_logger = TestLogger(; min_level=Warn)
+global_logger(test_logger)
 
 @testset "Integration tests" begin
     import Lux
@@ -30,5 +34,9 @@ rng = Random.Xoshiro(1234)
     @test init(@lift_nn -l1) isa Any
 
     # another unary
-    @test init(@lift_nn tanh(l1)) isa Any
+    with_logger(test_logger) do
+        init(@lift_nn tanh(l1))
+    end
+    @test occursin("untested", test_logger.logs[1].message)
+
 end

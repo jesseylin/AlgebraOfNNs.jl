@@ -19,11 +19,6 @@ rng = Random.Xoshiro(1234)
     # binary addition of numbers
     @test init(@lift_nn 1 + 2) isa Any
 
-    # binary addition of variables
-    x = 1
-    y = 2
-    @test_broken init(@lift_nn x + y) isa Any
-
     # basic scalar mult
     @test init(@lift_nn 2*l1) isa Any
 

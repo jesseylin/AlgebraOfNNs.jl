@@ -14,10 +14,3 @@ function lift_nary(func, ops...)
         Lux.Parallel($func, $(ops...))
     end
 end
-
-function lift_mult(scalar::Number, op)
-    return quote
-        Lux.Chain($op, Lux.WrappedFunction(x -> $scalar * x))
-    end
-end
-lift_mult(op, scalar::Number) = lift_mult(scalar, op)

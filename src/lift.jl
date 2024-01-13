@@ -1,5 +1,5 @@
 function lift_nn(ex)
-    postwalk(ex) do x
+    return postwalk(ex) do x
         if Base.isexpr(x, :call)
             local func = x.args[1]
             local args = x.args[2:end]

@@ -1,8 +1,8 @@
 function lift_nn(ex)
     postwalk(ex) do x
         if Base.isexpr(x, :call)
-            func = x.args[1]
-            args = x.args[2:end]
+            local func = x.args[1]
+            local args = x.args[2:end]
             if func == :+
                 # Base.MainInclude.eval is used to explicitly request expression
                 # substitution of the AST starting from leaves

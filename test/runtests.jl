@@ -13,33 +13,33 @@ global_logger(test_logger)
     l1 = Dense(1 => 2)
     l2 = Dense(1 => 3)
 
-    init(x) = Lux.setup(rng, x)
+    init_test(x) = !isnothing(Lux.setup(rng, x))
     # binary addition
-    @test init(@lift_nn l1 + l2) isa Any
+    @test init_test(@lift_nn l1 + l2)
 
     # n-ary addition
-    @test init(@lift_nn l1 + l2 + l1 + l2) isa Any
+    @test init_test(@lift_nn l1 + l2 + l1 + l2)
 
     # binary addition of numbers
-    @test init(@lift_nn 1 + 2) isa Any
+    @test init_test(@lift_nn 1 + 2)
 
     # basic scalar mult
-    @test init(@lift_nn 2 * l1) isa Any
+    @test init_test(@lift_nn 2 * l1)
 
     # complicated scalar mult
     # but please don't write formulas like this
-    @test init(@lift_nn 2.5 * 1.5 * l1) isa Any
+    @test init_test(@lift_nn 2.5 * 1.5 * l1)
 
     # scalar mult with π
     # FIXME: I don't think this is possible to fix
-    @test_broken init(@lift_nn π * l1) isa Any
+    @test_broken init_test(@lift_nn π * l1)
 
     # basic unary
-    @test init(@lift_nn -l1) isa Any
+    @test init_test(@lift_nn -l1)
 
     # another unary
     with_logger(test_logger) do
-        init(@lift_nn tanh(l1))
+        init_test(@lift_nn tanh(l1))
     end
     @test occursin("untested", test_logger.logs[1].message)
 

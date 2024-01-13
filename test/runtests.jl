@@ -29,7 +29,7 @@ rng = Random.Xoshiro(1234)
 
     # complicated scalar mult
     # but please don't write formulas like this
-    # @test_broken init(@lift_nn 2*2*l1) isa Any
+    @test init(@lift_nn 2*2*l1) isa Any
 
     # basic unary
     @test init(@lift_nn -l1) isa Any

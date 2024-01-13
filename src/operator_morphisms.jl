@@ -4,7 +4,7 @@ end
 
 function lift_unary(func, op)
     return quote
-        Lux.Chain($op, Lux.WrappedFunction(func))
+        Lux.Chain($op, Lux.WrappedFunction($func))
     end
 end
 

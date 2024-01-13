@@ -7,8 +7,6 @@ function lift_nn(ex)
             # Base.MainInclude.eval is used to explicitly request expression
             # substitution of the AST starting from leaves and within the macro
             # call environment
-            # FIXME: Doing it this way means that the user must have
-            # AlgebraOfNNs resolvable at the call site
             if !(func in [:+, :*, :/, :-])
                 @warn "Expanding macro for untested value $(func). Proper behavior is not guaranteed."
             end
@@ -25,5 +23,17 @@ end
 
 macro lift_nn(ex)
     # escape in order to use the scope of the call site
-    return esc(lift_nn(ex))
+    expansion = esc(lift_nn(ex))
+    return quote
+        # NOTE: It would be crazy type piracy to overload these names in such a
+        # way that the dynamic scope resolution becomes a problem from this
+        # library.  Please don't do that.
+        @static if !(@isdefined(Lux))
+            import Lux
+        end
+        @static if !(@isdefined(AlgebraOfNNs))
+            import AlgebraOfNNs
+        end
+        $expansion
+    end
 end

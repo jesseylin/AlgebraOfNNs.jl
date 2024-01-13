@@ -13,7 +13,6 @@ rng = Random.Xoshiro(1234)
     # binary addition
     @test init(@lift_nn l1 + l2) isa Any
 
-
     # n-ary addition
     @test init(@lift_nn l1 + l2 + l1 + l2) isa Any
 
@@ -25,4 +24,10 @@ rng = Random.Xoshiro(1234)
     y = 2
     @test_broken init(@lift_nn x + y) isa Any
 
+    # basic scalar mult
+    @test init(@lift_nn 2*l1) isa Any
+
+    # complicated scalar mult
+    # but please don't write formulas like this
+    @test_broken init(@lift_nn 2*2*l1) isa Any
 end

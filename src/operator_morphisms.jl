@@ -7,13 +7,13 @@ function lift_unary(func, op)
         Lux.Chain($op, Lux.WrappedFunction(func))
     end
 end
+
 function lift_nary(func, ops...)
     ops = [op isa Number ? lift(op) : op for op in ops]
     return quote
         Lux.Parallel($func, $(ops...))
     end
 end
-
 
 function lift_mult(scalar::Number, op)
     return quote

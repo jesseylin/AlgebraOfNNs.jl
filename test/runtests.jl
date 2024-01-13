@@ -28,7 +28,11 @@ global_logger(test_logger)
 
     # complicated scalar mult
     # but please don't write formulas like this
-    @test init(@lift_nn 2 * 2 * l1) isa Any
+    @test init(@lift_nn 2.5 * 1.5 * l1) isa Any
+
+    # scalar mult with π
+    # FIXME: I don't think this is possible to fix
+    @test_broken init(@lift_nn π * l1) isa Any
 
     # basic unary
     @test init(@lift_nn -l1) isa Any

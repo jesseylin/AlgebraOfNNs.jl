@@ -1,5 +1,5 @@
 function lift(y::Number)
-    return WrappedFunction(x -> fill(y, size(x)))
+    return :(Lux.WrappedFunction(x -> fill(y, size(x))))
 end
 
 function lift_unary(func, op)

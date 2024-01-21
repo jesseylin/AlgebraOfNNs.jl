@@ -2,14 +2,16 @@ using AlgebraOfNNs
 using Test
 using Random
 using Logging
+# Note: must resolve Lux into top-level name-space, due to how the library
+# dynamically imports Lux if it is not @isdefined already
+import Lux
+using Lux: Dense
 
 rng = Random.Xoshiro(1234)
 test_logger = TestLogger(; min_level=Warn)
 global_logger(test_logger)
 
 @testset "Integration tests" begin
-    import Lux
-    using Lux: Dense
     l1 = Dense(1 => 2)
     l2 = Dense(1 => 3)
 
